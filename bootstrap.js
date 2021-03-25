@@ -11,14 +11,14 @@ const checkForUpdates = async () => {
 
   const repository = 'idiaza/rebates-app';
   const localVersion = app.getVersion();
+  let remoteVersion = 'v0.0.0';
 
   try {
     const response = await get('https://api.github.com/repos/' + repository + '/releases/latest');
-    const remoteVersion = response.data.tag_name;
+    remoteVersion = response.data.tag_name;
   } catch (err) {
     return false;
   }
-
 
   console.log(remoteVersion);
 
