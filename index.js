@@ -35,10 +35,12 @@ function execShellCommand(cmd) {
     const nodeModulesPath = join(appPath, './node_modules');
 
     if (!existsSync(nodeModulesPath)) {
+      await dialog.showMessageBox({ message: 'Instalando dependencias' });
       const out = await execShellCommand('cd /d ' + appPath + ' && npm install');
     }
 
     // await hideSplash();
+    await dialog.showMessageBox({ message: 'Iniciando app' });
 
     await require('./bootstrap').bootstrap();
 

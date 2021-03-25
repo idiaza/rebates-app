@@ -11,23 +11,34 @@ const checkForUpdates = async () => {
 
   const repository = 'idiaza/rebates-app';
   const localVersion = app.getVersion();
-  const remoteVersion = (await get('https://api.github.com/repos/' + repository + '/releases/latest')).data.tag_name;
+
+  try {
+    const response = await get('https://api.github.com/repos/' + repository + '/releases/latest');
+    const remoteVersion = response.data.tag_name;
+  } catch (err) {
+    return false;
+  }
+
+
+  console.log(remoteVersion);
 
   // Update
   if (lt(localVersion, remoteVersion)) {
 
     const userAction = await dialog.showMessageBox(null, {
       type: 'question',
-      message: 'An update is available: ' + remoteVersion,
+      message: 'Actualización disponible: v' + remoteVersion,
       buttons: [
-        'Update and restart now',
-        'Later'
+        'Actualizar ahora',
+        'Cancelar'
       ]
     });
 
     if (userAction.response > 0) {
       return false;
     }
+
+    await dialog.showMessageBox({ message: 'Iniciando actualización' });
 
     const updatePath = join(app.getPath('temp'), appName);
 
@@ -44,17 +55,17 @@ const checkForUpdates = async () => {
     // const appPath = '/Users/ismael/Desktop/app';
     const appPath = app.getAppPath();
 
-    await dialog.showMessageBox({ message: codePath });
-    await dialog.showMessageBox({ message: appPath });
+    // await dialog.showMessageBox({ message: codePath });
+    // await dialog.showMessageBox({ message: appPath });
 
-    // moveSync(codePath, appPath, { overwrite: true });
-    // return true;
+    moveSync(codePath, appPath, { overwrite: true });
+    return true;
 
-    return Promise((resolve, reject) => {
-      move(codePath, appPath, { overwrite: true }, err => {
-        resolve(true);
-      });
-    });
+    // return Promise((resolve, reject) => {
+    //   move(codePath, appPath, { overwrite: true }, err => {
+    //     resolve(true);
+    //   });
+    // });
 
   }
 
