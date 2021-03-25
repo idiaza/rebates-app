@@ -1,0 +1,31 @@
+{
+  "private": true,
+  "name": "rebates-app",
+  "productName": "Rebates App",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "electron .",
+    "make": "node ./scripts/make.js"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "electron-settings": "^4.0.2",
+    "fs-extra": "^9.1.0",
+    "handlebars": "^4.7.7",
+    "lodash": "^4.17.21",
+    "mathjs": "^9.3.0",
+    "moment": "^2.29.1",
+    "semver": "^7.3.5",
+    "tingodb": "^0.6.1",
+    "unzipper": "^0.10.11",
+    "xlsx": "^0.16.9"
+  },
+  "devDependencies": {
+    "electron": "^12.0.1"
+  }
+}
